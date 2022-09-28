@@ -1,0 +1,14 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: service2
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+management:
+  endpoint:
+    restart:
+      enabled: true
+  
