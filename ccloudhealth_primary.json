@@ -1,0 +1,15 @@
+{
+  "id": "primarykafka",
+  "name": "primarykafka",
+  "address": "pkc-2396y.us-east-1.aws.confluent.cloud:9092",
+  "port": 9092,
+  "check": {
+    "name": "primary",
+    "tcp":"pkc-2396y.us-east-1.aws.confluent.cloud:9092",
+    "interval": "5s",
+    "status": "passing",
+    "deregister_critical_service_after": "5s"
+  }
+
+}
+
