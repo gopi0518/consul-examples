@@ -17,19 +17,22 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Component
-public class Scheduler {
+@RestController
+
+public class HealthCheckService {
 	@Autowired
 	private DiscoveryClient discoveryClient;
 	TreeMap<Date, HealthCheck> logHC = new TreeMap<Date, HealthCheck>();
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+	HealthCheck hc = new HealthCheck();
 	@Scheduled(fixedRate = 100000)
 	public void cronJobSch() {
 		//HealthCheck HC = new HealthCheck();
 		List<ServiceInstance> service1List = discoveryClient.getInstances("primarykafka");
 		ServiceInstance service1 = null;
-		HealthCheck hc = new HealthCheck();
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<HealthCheck> entity = new HttpEntity<>(hc, headers);
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -53,8 +56,7 @@ public class Scheduler {
 				System.out.println("JVM started");
 				logHC.put(now, hc);
 				hc.setActive_cluster("Secondary");
-				hc.setIs_restarted(false);
-				hc.setRestart_time(now);
+				hc.setHc_time(now);
 				/*String response = builder.build()
 						.postForObject("http://localhost:8081/kafka/healthcheck/notify", entity, String.class);
 				//System.out.println(response);*/
@@ -65,8 +67,7 @@ public class Scheduler {
 			if(logHC.lastEntry().getValue().active_cluster!="Secondary") {
 				System.out.println("Status change to Secondary");
 				hc.setActive_cluster("Secondary");
-				hc.setIs_restarted(true);
-				hc.setRestart_time(now);
+				hc.setHc_time(now);
 
 				
 				
@@ -76,10 +77,9 @@ public class Scheduler {
 				System.out.println(response);
 			}
 			else {
-				System.out.println("Status change to Secondary,no restart");
+				System.out.println("Status change to Secondary,no notify");
 				hc.setActive_cluster("Secondary");
-				hc.setIs_restarted(false);
-				hc.setRestart_time(logHC.lastEntry().getValue().getRestart_time());
+				hc.setHc_time(now);
 			}
 			logHC.put(now, hc);
 			}
@@ -91,8 +91,7 @@ public class Scheduler {
 				logHC.put(now, hc);
 				System.out.println("JVM started");
 				hc.setActive_cluster("Primary");
-				hc.setIs_restarted(false);
-				hc.setRestart_time(now);
+				hc.setHc_time(now);
 				/*String response = builder.build()
 						.postForObject("http://localhost:8081/kafka/healthcheck/notify", entity, String.class);
 				//logHC.put(now, hc);*/
@@ -101,9 +100,9 @@ public class Scheduler {
 
 			if(logHC.lastEntry().getValue().active_cluster!="Primary") {
 			    System.out.println("Status change to Primary");
-				hc.setIs_restarted(true);
+			    hc.setHc_time(now);
 				hc.setActive_cluster("Primary");
-				hc.setRestart_time(now);
+				
 				headers.setContentType(MediaType.APPLICATION_JSON);
 				String response = builder.build()
 						.postForObject("http://localhost:8081/kafka/healthcheck/notify", entity, String.class);
@@ -111,10 +110,9 @@ public class Scheduler {
 			}
 
 			else {
-				System.out.println("Status change to Primary, no restart");
+				System.out.println("Status change to Primary, no notification");
 				hc.setActive_cluster("Primary");
-				hc.setIs_restarted(false);
-				hc.setRestart_time(logHC.lastEntry().getValue().getRestart_time());
+				hc.setHc_time(now);
 			}
 			logHC.put(now, hc);
 			}
@@ -124,5 +122,9 @@ public class Scheduler {
 		
 		System.out.println(logHC.size());
 		System.out.println(logHC.lastEntry().getValue().active_cluster);
+	}
+	@GetMapping("/activecluster")
+	public HealthCheck getActiveCluster() {
+		return hc;
 	}
 }

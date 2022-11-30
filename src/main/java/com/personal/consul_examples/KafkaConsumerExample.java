@@ -26,7 +26,7 @@ public class KafkaConsumerExample {
 	SplunkEventGen SG = new SplunkEventGen();
 	DNSRaw dr= new DNSRaw();
 	
-	@KafkaListener(topics  = {"dns"}, groupId = "dnslookup", containerFactory = "kafkaListenerContainerFactory")
+	@KafkaListener(topics  = {"dns"}, groupId = "dnslookup1", containerFactory = "kafkaListenerContainerFactory")
 	public void listenGroupFoo(String message) {
 	    
 	    //JSONArray array = new JSONArray(message);
