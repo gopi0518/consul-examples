@@ -21,9 +21,9 @@ public class KafkaProducerConfig {
         HashMap<String, Object> configProps = new HashMap<String, Object>();
         configProps.put(
                 ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                "abc.us-east-1.aws.confluent.cloud:9092");
+                "pkc-2396y.us-east-1.aws.confluent.cloud:9092");
         configProps.put("security.protocol","SASL_SSL");
-        configProps.put("sasl.jaas.config","org.apache.kafka.common.security.plain.PlainLoginModule required username='abc' password='abc';");
+        configProps.put("sasl.jaas.config","org.apache.kafka.common.security.plain.PlainLoginModule required username='5JW4B4S7CPI65WMI' password='fLcw0MM8I/gp4e8hboYDZy3mwWeNZyiawOda7ek3Dr3OZT5j3m17AZbzLWKb8wUs';");
         configProps.put("sasl.mechanism","PLAIN");
         configProps.put("client.dns.lookup","use_all_dns_ips");
         configProps.put("session.timeout.ms",45000);
@@ -75,9 +75,9 @@ public class KafkaProducerConfig {
         HashMap<String, Object> configProps = new HashMap<String, Object>();
         configProps.put(
                 ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                "abc.us-east-2.aws.confluent.cloud:9092");
+                "pkc-568p2.us-east-2.aws.confluent.cloud:9092");
         configProps.put("security.protocol","SASL_SSL");
-        configProps.put("sasl.jaas.config","org.apache.kafka.common.security.plain.PlainLoginModule required username='abc' password='abc';");
+        configProps.put("sasl.jaas.config","org.apache.kafka.common.security.plain.PlainLoginModule required username='TBTY7Z4GJVITBKLL' password='yLQViReTdUJ692LX7JYx2jqTY6bAvQacQ2tTo8JR4sxx+Db737THfsNok7Ko+8X7';");
         configProps.put("sasl.mechanism","PLAIN");
         configProps.put("client.dns.lookup","use_all_dns_ips");
         configProps.put("session.timeout.ms",45000);
