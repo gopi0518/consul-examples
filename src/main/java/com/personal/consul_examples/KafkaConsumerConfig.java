@@ -26,7 +26,7 @@ public class KafkaConsumerConfig {
 	          ConsumerConfig.GROUP_ID_CONFIG, 
 	          "test");
 	        props.put("security.protocol","SASL_SSL");
-	        props.put("sasl.jaas.config","org.apache.kafka.common.security.plain.PlainLoginModule required username='TBTY7Z4GJVITBKLL' password='yLQViReTdUJ692LX7JYx2jqTY6bAvQacQ2tTo8JR4sxx+Db737THfsNok7Ko+8X7';");
+	        props.put("sasl.jaas.config","org.apache.kafka.common.security.plain.PlainLoginModule required username='xxxxxxx' password='xxxxxxxxx';");
 	        props.put("sasl.mechanism","PLAIN");
 	        props.put("client.dns.lookup","use_all_dns_ips");
 	        props.put("session.timeout.ms",45000);
